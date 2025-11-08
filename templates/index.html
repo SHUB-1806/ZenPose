@@ -189,67 +189,62 @@
 
 
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ZenPose | Yoga Pose Detection</title>
-
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
-    /* 🌑 Base Styling */
+    /* 🌑 Base Styling with Page Fade-in */
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
       background: radial-gradient(circle at top left, #0f0f1a, #06060d);
       color: #e5e5e5;
       text-align: center;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
       overflow-x: hidden;
+      animation: fadeInPage 1s ease-in-out;
     }
 
-    /* 🔮 Header */
+    @keyframes fadeInPage {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Header */
     header {
       margin-top: 50px;
     }
-
     h1 {
       font-size: 3rem;
       background: linear-gradient(90deg, #00f0ff, #ff00cc);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin-bottom: 10px;
-      letter-spacing: 1.5px;
     }
-
     p {
-      color: #b8b8b8;
+      color: #bbbbbb;
       font-size: 1.1rem;
     }
 
-    /* 📦 Upload Card */
+    /* Upload Card with glowing border */
     .upload-box {
       margin: 40px auto;
       background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(15px);
       border-radius: 20px;
       width: 460px;
       max-width: 90%;
       padding: 35px;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
-      transition: all 0.3s ease-in-out;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+      transition: 0.4s;
+      position: relative;
     }
-
     .upload-box:hover {
-      box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+      box-shadow: 0 0 25px rgba(0, 255, 200, 0.2);
+      transform: translateY(-3px);
     }
 
     input[type="file"] {
@@ -258,12 +253,11 @@
       border-radius: 10px;
       border: 1px solid rgba(255, 255, 255, 0.2);
       background: rgba(255, 255, 255, 0.07);
-      color: #fff;
       width: 100%;
+      color: #fff;
       cursor: pointer;
       transition: 0.3s;
     }
-
     input[type="file"]:hover {
       background: rgba(255, 255, 255, 0.15);
     }
@@ -278,73 +272,55 @@
       cursor: pointer;
       font-size: 1rem;
       font-weight: 600;
-      letter-spacing: 0.5px;
       transition: 0.3s ease-in-out;
     }
-
     button:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(255, 0, 255, 0.4);
+      box-shadow: 0 0 15px rgba(255, 0, 200, 0.3);
     }
 
-    /* 🖼️ Image Section */
+    /* Image Preview Blocks */
     .image-display {
       margin-top: 60px;
       display: flex;
       justify-content: center;
-      align-items: flex-start;
       flex-wrap: wrap;
       gap: 50px;
     }
-
     .img-block {
       background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 20px;
       padding: 20px;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+      transition: 0.3s;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
     }
-
     .img-block:hover {
       transform: translateY(-5px);
-      box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+      box-shadow: 0 0 25px rgba(0, 200, 255, 0.2);
     }
-
-    .img-block h3 {
-      color: #00f0ff;
-      font-weight: 600;
-      margin-bottom: 15px;
-    }
-
     .preview-img {
       width: 320px;
       max-width: 90%;
       border-radius: 15px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
       transition: 0.3s;
     }
-
     .preview-img:hover {
       transform: scale(1.02);
-      box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
     }
 
-    /* 📊 Result Card */
+    /* Result Card */
     .result-card {
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.15);
       backdrop-filter: blur(15px);
       padding: 25px 40px;
       border-radius: 20px;
-      margin: 60px auto 40px;
+      margin: 50px auto;
       width: fit-content;
-      text-align: center;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.1);
       animation: fadeIn 1s ease-in-out;
-      box-shadow: 0 0 25px rgba(0, 255, 255, 0.15);
     }
-
     .pose-name {
       font-size: 1.8rem;
       background: linear-gradient(90deg, #00f0ff, #ff00cc);
@@ -352,16 +328,9 @@
       -webkit-text-fill-color: transparent;
       font-weight: 700;
     }
-
     .confidence {
       color: #ffd700;
       font-weight: 600;
-    }
-
-    /* 💫 Animations */
-    #preview {
-      margin-top: 20px;
-      animation: fadeIn 0.7s ease-in-out;
     }
 
     @keyframes fadeIn {
@@ -369,13 +338,12 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* 🧘 Footer */
+    /* Footer */
     footer {
       font-size: 0.85rem;
       color: #808080;
-      margin-bottom: 25px;
+      margin: 50px 0 20px;
     }
-
     footer span {
       color: #00f0ff;
     }
@@ -385,7 +353,7 @@
 <body>
   <header>
     <h1>✨ ZenPose</h1>
-    <p>AI-Powered Yoga Pose Detection • Dark Mode Edition</p>
+    <p>A deep learning–based system that detects and classifies yoga poses using body landmarks for accurate posture recognition</p>
   </header>
 
   <div class="upload-box">
@@ -401,13 +369,13 @@
     {% if uploaded_image %}
     <div class="img-block">
       <h3>Uploaded Image</h3>
-      <img src="{{ url_for('static', filename='uploads/' + uploaded_image) }}" class="preview-img" />
+      <img src="{{ url_for('static', filename='uploads/' + uploaded_image) }}" class="preview-img">
     </div>
     {% endif %}
     {% if output_image %}
     <div class="img-block">
       <h3>Predicted Output</h3>
-      <img src="{{ url_for('static', filename='output/' + output_image) }}" class="preview-img" />
+      <img src="{{ url_for('static', filename='output/' + output_image) }}" class="preview-img">
     </div>
     {% endif %}
   </div>
@@ -420,9 +388,18 @@
   </div>
   {% endif %}
 
-  <footer>
-    <p>Made with <span>🩵 TensorFlow × Flask × MediaPipe</span> — © ZenPose</p>
-  </footer>
+<footer>
+  <p>
+    <span class="footer-title">ZenPose • EE604 Project</span><br>
+    <strong></strong>IIT Kanpur  
+    &nbsp;|&nbsp;
+    <a href="https://github.com/SHUB-1806" target="_blank" class="github-link">
+      <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/github.svg" class="github-icon" alt="GitHub">
+      github.com/SHUB-1806
+    </a>
+  </p>
+</footer>
+
 
   <script>
     function previewImage(event) {
@@ -435,7 +412,7 @@
     }
   </script>
 </body>
-</html> 
+</html>
 
 
 
@@ -655,7 +632,7 @@
 <body>
   <header>
     <div class="logo">
-      <!-- Minimal Yoga Lotus SVG -->
+      Minimal Yoga Lotus SVG
       <svg viewBox="0 0 64 64">
         <path d="M32 2s-10 14-10 24 10 24 10 24 10-14 10-24-10-24-10-24z"/>
       </svg>
@@ -711,5 +688,6 @@
     }
   </script>
 </body>
-</html> -->
+</html> 
+-->
 
