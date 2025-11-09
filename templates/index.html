@@ -1,360 +1,164 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Yoga Pose Detection</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
-        img { width: 300px; margin-top: 20px; border-radius: 10px; }
-        .result { font-size: 20px; color: #2e8b57; margin-top: 20px; }
-    </style>
-</head>
-<body>
-    <h1>Yoga Pose Detection</h1>
-    <form action="/predict" method="post" enctype="multipart/form-data">
-        <input type="file" name="image" accept="image/*" required><br><br>
-        <input type="submit" value="Predict Pose">
-    </form>
-
-    {% if uploaded_image %}
-        <img src="{{ url_for('static', filename='uploads/' + uploaded_image) }}" alt="Uploaded Image">
-    {% endif %}
-
-    {% if prediction_text %}
-        <div class="result">{{ prediction_text }}</div>
-    {% endif %}
-</body>
-</html> -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yoga Pose Detection</title>
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #6a11cb, #2575fc);
-            color: white;
-            text-align: center;
-            padding: 40px;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-
-        .upload-container {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 20px;
-            padding: 30px;
-            display: inline-block;
-            box-shadow: 0 0 15px rgba(0,0,0,0.2);
-            margin-top: 20px;
-        }
-
-        input[type="file"] {
-            background: #fff;
-            color: #333;
-            border-radius: 10px;
-            padding: 10px;
-            margin-top: 10px;
-        }
-
-        button {
-            margin-top: 20px;
-            background: #00c6ff;
-            border: none;
-            color: white;
-            padding: 10px 25px;
-            border-radius: 25px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        button:hover {
-            background: #0072ff;
-        }
-
-        .image-container {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            gap: 30px;
-            margin-top: 40px;
-            flex-wrap: wrap;
-        }
-
-        .preview-block {
-            text-align: center;
-        }
-
-        .preview-img {
-            width: 320px;
-            height: auto;
-            border-radius: 15px;
-            border: 3px solid rgba(255,255,255,0.7);
-            box-shadow: 0 0 10px rgba(255,255,255,0.3);
-        }
-
-        .result-box {
-            background: rgba(255,255,255,0.15);
-            padding: 20px;
-            border-radius: 15px;
-            margin-top: 30px;
-            display: inline-block;
-        }
-    </style>
-</head>
-<body>
-    <h1>🧘 Yoga Pose Detection</h1>
-    <p>Upload a pose image to detect the asana, angles, and confidence score</p>
-
-    <div class="upload-container">
-        <form action="/predict" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" accept="image/*" onchange="previewImage(event)" required>
-            <br>
-            <button type="submit">Predict Pose</button>
-        </form>
-        <div id="preview" style="margin-top: 20px;"></div>
-    </div>
-
-    {% if uploaded_image or output_image %}
-    <div class="image-container">
-        {% if uploaded_image %}
-        <div class="preview-block">
-            <h3>Uploaded Image</h3>
-            <img src="{{ url_for('static', filename='uploads/' + uploaded_image) }}" class="preview-img">
-        </div>
-        {% endif %}
-
-        {% if output_image %}
-        <div class="preview-block">
-            <h3>Predicted Output</h3>
-            <img src="{{ url_for('static', filename='output/' + output_image) }}" class="preview-img">
-        </div>
-        {% endif %}
-    </div>
-    {% endif %}
-
-    {% if predicted_label %}
-    <div class="result-box">
-        <h2>🧩 Predicted Pose: <span style="color:#00ffcc;">{{ predicted_label }}</span></h2>
-        <h3>Accuracy: <span style="color:#ffd700;">{{ confidence }}</span></h3>
-    </div>
-    {% endif %}
-
-    <script>
-        function previewImage(event) {
-            let preview = document.getElementById('preview');
-            preview.innerHTML = '';
-            let img = document.createElement('img');
-            img.src = URL.createObjectURL(event.target.files[0]);
-            img.className = 'preview-img';
-            preview.appendChild(img);
-        }
-    </script>
-</body>
-</html> -->
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ZenPose | Yoga Pose Detection</title>
+
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
-    /* 🌑 Base Styling with Page Fade-in */
+    /* 🌿 Calm Green Wellness Theme */
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
-      background: radial-gradient(circle at top left, #0f0f1a, #06060d);
-      color: #e5e5e5;
+      background: linear-gradient(145deg, #0d1f1a, #0b1311);
+      color: #e4f8e8;
       text-align: center;
-      overflow-x: hidden;
-      animation: fadeInPage 1s ease-in-out;
-    }
-
-    @keyframes fadeInPage {
-      from { opacity: 0; }
-      to { opacity: 1; }
     }
 
     /* Header */
     header {
-      margin-top: 50px;
-    }
-    h1 {
-      font-size: 3rem;
-      background: linear-gradient(90deg, #00f0ff, #ff00cc);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    p {
-      color: #bbbbbb;
-      font-size: 1.1rem;
+      margin-top: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
     }
 
-    /* Upload Card with glowing border */
+    /* Logo next to title */
+    .logo-img {
+      width: 100px;
+      height: 100px;
+      filter: drop-shadow(0 0 10px rgba(0, 255, 140, 0.4));
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #69ff97, #00e676);
+      background-clip: text;             /* ✅ Standard */
+      -webkit-background-clip: text;     /* ✅ WebKit */
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p {
+      color: #a2d5b5;
+    }
+
+    /* Upload Box */
     .upload-box {
       margin: 40px auto;
       background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 20px;
-      width: 460px;
+      width: 450px;
       max-width: 90%;
-      padding: 35px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
-      transition: 0.4s;
-      position: relative;
-    }
-    .upload-box:hover {
-      box-shadow: 0 0 25px rgba(0, 255, 200, 0.2);
-      transform: translateY(-3px);
+      padding: 30px;
+      box-shadow: 0 0 20px rgba(0, 255, 130, 0.1);
     }
 
     input[type="file"] {
-      margin-top: 15px;
-      padding: 12px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #e4f8e8;
+      padding: 10px;
       border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      background: rgba(255, 255, 255, 0.07);
       width: 100%;
-      color: #fff;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    input[type="file"]:hover {
-      background: rgba(255, 255, 255, 0.15);
     }
 
     button {
-      margin-top: 25px;
-      padding: 12px 28px;
-      background: linear-gradient(90deg, #00f0ff, #ff00cc);
-      color: #fff;
+      margin-top: 20px;
+      padding: 12px 25px;
       border: none;
       border-radius: 25px;
-      cursor: pointer;
+      background: linear-gradient(90deg, #69ff97, #00e676);
+      color: #002b18;
       font-size: 1rem;
       font-weight: 600;
-      transition: 0.3s ease-in-out;
+      cursor: pointer;
+      transition: 0.3s;
     }
+
     button:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 15px rgba(255, 0, 200, 0.3);
+      box-shadow: 0 0 15px rgba(0, 255, 130, 0.4);
     }
 
-    /* Image Preview Blocks */
+    /* Image Display */
     .image-display {
-      margin-top: 60px;
       display: flex;
       justify-content: center;
+      gap: 40px;
       flex-wrap: wrap;
-      gap: 50px;
+      margin-top: 50px;
     }
+
     .img-block {
       background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 20px;
-      padding: 20px;
-      transition: 0.3s;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      padding: 15px;
     }
-    .img-block:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 25px rgba(0, 200, 255, 0.2);
-    }
+
     .preview-img {
       width: 320px;
-      max-width: 90%;
-      border-radius: 15px;
-      transition: 0.3s;
-    }
-    .preview-img:hover {
-      transform: scale(1.02);
+      border-radius: 12px;
     }
 
-    /* Result Card */
+    /* Result */
     .result-card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(15px);
-      padding: 25px 40px;
-      border-radius: 20px;
-      margin: 50px auto;
+      margin: 40px auto;
+      background: rgba(0, 30, 15, 0.6);
+      border: 1px solid rgba(0, 255, 120, 0.2);
+      box-shadow: 0 0 20px rgba(0, 255, 120, 0.1);
+      padding: 20px 40px;
       width: fit-content;
-      box-shadow: 0 0 25px rgba(0, 255, 255, 0.1);
-      animation: fadeIn 1s ease-in-out;
-    }
-    .pose-name {
-      font-size: 1.8rem;
-      background: linear-gradient(90deg, #00f0ff, #ff00cc);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-weight: 700;
-    }
-    .confidence {
-      color: #ffd700;
-      font-weight: 600;
+      border-radius: 20px;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    .pose-name {
+      background: linear-gradient(90deg, #69ff97, #00e676);
+      background-clip: text;             /* ✅ Standard */
+      -webkit-background-clip: text;     /* ✅ WebKit */
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .confidence {
+      color: #caffb9;
     }
 
     /* Footer */
     footer {
-      font-size: 0.85rem;
-      color: #808080;
-      margin: 50px 0 20px;
+      margin-top: 50px;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+      color: #9bbfa8;
     }
-    footer span {
-      color: #00f0ff;
+
+    footer img {
+      width: 18px;
+      vertical-align: middle;
+      margin-left: 5px;
+      filter: invert(80%) sepia(15%) saturate(300%) hue-rotate(80deg);
+    }
+
+    footer a {
+      color: #8affc1;
+      text-decoration: none;
+      font-weight: 600;
     }
   </style>
 </head>
 
 <body>
   <header>
-    <h1>✨ ZenPose</h1>
-    <p>A deep learning–based system that detects and classifies yoga poses using body landmarks for accurate posture recognition</p>
+    <img src="{{ url_for('static', filename='logo.png') }}" class="logo-img" alt="ZenPose Logo">
+    <h1>ZenPose</h1>
   </header>
+
+  <p>AI-powered yoga posture detection for wellness and balance 🌿</p>
 
   <div class="upload-box">
     <form action="/predict" method="post" enctype="multipart/form-data">
@@ -372,6 +176,7 @@
       <img src="{{ url_for('static', filename='uploads/' + uploaded_image) }}" class="preview-img">
     </div>
     {% endif %}
+
     {% if output_image %}
     <div class="img-block">
       <h3>Predicted Output</h3>
@@ -388,293 +193,11 @@
   </div>
   {% endif %}
 
-<footer>
-  <p>
-    <span class="footer-title">ZenPose • EE604 Project</span><br>
-    <strong></strong>IIT Kanpur  
-    &nbsp;|&nbsp;
-    <a href="https://github.com/SHUB-1806" target="_blank" class="github-link">
-      <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/github.svg" class="github-icon" alt="GitHub">
-      github.com/SHUB-1806
-    </a>
-  </p>
-</footer>
-
-
-  <script>
-    function previewImage(event) {
-      const preview = document.getElementById('preview');
-      preview.innerHTML = '';
-      const img = document.createElement('img');
-      img.src = URL.createObjectURL(event.target.files[0]);
-      img.className = 'preview-img';
-      preview.appendChild(img);
-    }
-  </script>
-</body>
-</html>
-
-
-
-<!-- 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ZenPose | Yoga Pose Detection</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    /* =========================
-       🌌 Dark Theme Palette
-       =========================
-       Background: #0A0B2A
-       Card / Secondary: #1A1B3A
-       Neon Cyan: #00FFF0
-       Neon Pink: #FF00CC
-       Soft Gold: #FFD700
-       Text Primary: #E5E5E5
-       Text Secondary: #B8B8B8
-    */
-
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: #0A0B2A;
-      color: #E5E5E5;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      justify-content: space-between;
-      overflow-x: hidden;
-    }
-
-    /* Header / Logo */
-    header {
-      text-align: center;
-      margin-top: 50px;
-    }
-
-    .logo {
-      font-size: 2.5rem;
-      font-weight: 700;
-      background: linear-gradient(90deg, #00FFF0, #FF00CC);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .logo svg {
-      width: 40px;
-      height: 40px;
-      fill: #00FFF0;
-      stroke: #FF00CC;
-      stroke-width: 1;
-    }
-
-    header p {
-      color: #B8B8B8;
-      font-size: 1.1rem;
-      margin-top: 5px;
-    }
-
-    /* Upload Box */
-    .upload-box {
-      margin: 50px auto;
-      background: rgba(26,27,58,0.8);
-      border-radius: 25px;
-      width: 480px;
-      max-width: 90%;
-      padding: 40px;
-      box-shadow: 0 0 30px rgba(0,255,240,0.2);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .upload-box:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 0 40px #FF00CC, 0 0 25px #00FFF0;
-    }
-
-    input[type="file"] {
-      margin-top: 15px;
-      padding: 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.2);
-      background: rgba(255,255,255,0.05);
-      color: #E5E5E5;
-      width: 100%;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    input[type="file"]:hover {
-      background: rgba(255,255,255,0.15);
-    }
-
-    button {
-      margin-top: 25px;
-      padding: 14px 32px;
-      background: linear-gradient(90deg, #00FFF0, #FF00CC);
-      color: #0A0B2A;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      font-size: 1.1rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    button:hover {
-      transform: scale(1.08);
-      box-shadow: 0 0 25px #00FFF0, 0 0 25px #FF00CC;
-    }
-
-    /* Image Display */
-    .image-display {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 50px;
-      margin-top: 60px;
-    }
-
-    .img-block {
-      background: rgba(26,27,58,0.8);
-      border-radius: 25px;
-      padding: 25px;
-      box-shadow: 0 0 25px rgba(0,255,240,0.2);
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-
-    .img-block:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 0 35px #FF00CC, 0 0 25px #00FFF0;
-    }
-
-    .img-block h3 {
-      color: #00FFF0;
-      font-weight: 600;
-      margin-bottom: 15px;
-      text-shadow: 0 0 8px #00FFF0;
-    }
-
-    .preview-img {
-      width: 320px;
-      max-width: 90%;
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,0.2);
-      box-shadow: 0 0 20px rgba(0,0,0,0.5);
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-
-    .preview-img:hover {
-      transform: scale(1.04);
-      box-shadow: 0 0 35px #00FFF0;
-    }
-
-    /* Result Card */
-    .result-card {
-      background: rgba(26,27,58,0.85);
-      border-radius: 25px;
-      padding: 30px 50px;
-      margin: 60px auto 40px;
-      width: fit-content;
-      text-align: center;
-      box-shadow: 0 0 35px #FF00CC;
-      animation: fadeIn 1s ease-in-out;
-    }
-
-    .pose-name {
-      font-size: 2rem;
-      background: linear-gradient(90deg, #00FFF0, #FF00CC, #FFD700);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-weight: 700;
-      letter-spacing: 1px;
-    }
-
-    .confidence {
-      color: #FFD700;
-      font-weight: 600;
-      font-size: 1.2rem;
-    }
-
-    /* Animations */
-    #preview {
-      margin-top: 20px;
-      animation: fadeIn 0.7s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px);}
-      to { opacity: 1; transform: translateY(0);}
-    }
-
-    /* Footer */
-    footer {
-      font-size: 0.85rem;
-      color: #B8B8B8;
-      margin-bottom: 25px;
-      text-align: center;
-    }
-
-    footer span {
-      color: #00FFF0;
-      font-weight: 600;
-    }
-  </style>
-</head>
-
-<body>
-  <header>
-    <div class="logo">
-      Minimal Yoga Lotus SVG
-      <svg viewBox="0 0 64 64">
-        <path d="M32 2s-10 14-10 24 10 24 10 24 10-14 10-24-10-24-10-24z"/>
-      </svg>
-      ZenPose
-    </div>
-    <p>AI-Powered Yoga Pose Detection • Neon Dark Mode</p>
-  </header>
-
-  <div class="upload-box">
-    <form action="/predict" method="post" enctype="multipart/form-data">
-      <input type="file" name="file" accept="image/*" onchange="previewImage(event)" required />
-      <button type="submit">Analyze Pose</button>
-    </form>
-    <div id="preview"></div>
-  </div>
-
-  {% if uploaded_image or output_image %}
-  <div class="image-display">
-    {% if uploaded_image %}
-    <div class="img-block">
-      <h3>Uploaded Image</h3>
-      <img src="{{ url_for('static', filename='uploads/' + uploaded_image) }}" class="preview-img" />
-    </div>
-    {% endif %}
-    {% if output_image %}
-    <div class="img-block">
-      <h3>Predicted Output</h3>
-      <img src="{{ url_for('static', filename='output/' + output_image) }}" class="preview-img" />
-    </div>
-    {% endif %}
-  </div>
-  {% endif %}
-
-  {% if predicted_label %}
-  <div class="result-card">
-    <h2>🧘 Pose: <span class="pose-name">{{ predicted_label }}</span></h2>
-    <h3>Confidence: <span class="confidence">{{ confidence }}</span></h3>
-  </div>
-  {% endif %}
-
   <footer>
-    <p>Made with <span>🩵 TensorFlow × Flask × MediaPipe</span> — © ZenPose</p>
+    ZenPose • EE604 Project | IIT Kanpur |
+    <a href="https://github.com/SHUB-1806" target="_blank">
+      GitHub <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/github.svg" alt="GitHub">
+    </a>
   </footer>
 
   <script>
@@ -688,6 +211,4 @@
     }
   </script>
 </body>
-</html> 
--->
-
+</html>
